@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:5257
+
+### Health check
+GET {{baseUrl}}/health
+
+### Paginated EF Core query
+GET {{baseUrl}}/api/products?q=core&page=1&pageSize=10
+
+### Demonstrate global Problem Details exception handling
+GET {{baseUrl}}/api/learning/throw
+
+### Obtain a demo JWT (reader / demo-password)
+POST {{baseUrl}}/api/auth/token
+Content-Type: application/json
+
+{"username":"reader","password":"demo-password"}
+
+### This POST needs the returned bearer token
+POST {{baseUrl}}/api/products
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"name":"New demo item","price":12.5,"stock":4,"categoryId":1}
+
+### Fire one request through the fixed-window limiter
+GET {{baseUrl}}/api/demo/rate-limited
